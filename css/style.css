@@ -1,0 +1,223 @@
+@font-face {
+    font-family: 'Rascal';
+    src: url('../fonts/RASCAL__.TTF') format('truetype');
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,html{
+    height: 100%;
+    font-family: 'Courier New','Courier New', Courier, monospace;
+    overflow-x: hidden;
+}
+
+.video-wrapper{
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: #000;
+}
+
+.video-bg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6) contrast(1.2) saturate(1.4);
+}
+
+.overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:radial-gradient(rgba(0,0,0,0.1) 1px, transparent 1px);
+}
+
+.content{
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+h1{
+    font-size: 4rem;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+    text-shadow: 3px 3px 0px #ff00ff;
+}
+.marquee-container{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #000;
+    color: #ffff00;
+    padding: 10px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    z-index: 10;
+    border-top: 2px solid #ffff00;
+}
+.marquee-text{
+    display: inline-block;
+    font-family: 'Rascal',sans-serif;
+    font-size: 1.5rem;
+    animation: scroll-left 15s linear infinite;
+}
+@keyframes scroll-left{
+    from{ transform: translateX(100%);}
+    to{ transform: translateX(-100%);}
+}
+.centered-image-link{
+    display: inline-block;
+    width: fit-content;
+    max-width: 70%;
+    line-height: 0;
+}
+.centered-image{
+    max-width: 100%;
+    max-height: 50vh;
+    height: auto;
+    width: auto;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease;
+    opacity: 0.5;
+}
+.centered-image-link:hover .centered-image{
+    transform: scale(1.05);
+}
+.encabezado-logo{
+    position: absolute;
+    top: 0;
+    z-index: 20;
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: transparent;
+}
+.logo-contenedor{
+    position: relative;
+    display: inline-block;
+}
+.logo-gif{
+    max-width: 150px;
+    height: auto;
+    display: block;
+    transition: transform 0.2s ease-in-out;
+}
+.logo-contenedor:hover .logo-gif{
+    transform:scale(1.05);
+}
+.hitbox-ovalado{
+    position: absolute;
+    z-index: 10;
+    border-radius: 50%;
+    top: 25%;
+    left: 5%;
+    width: 90%;
+    height: 50%;
+}
+
+.introduccion {
+    max-width: 800px;
+    margin: 130px auto 60px auto;
+    text-align: center;
+    line-height: 1.6;
+}
+.collage-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    max-width: 1200px;
+    margin: 0 auto; /* Centra el collage en la pantalla */
+    padding: 20px;
+}
+.gallery-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px; /* Un ligero borde redondeado, opcional */
+    cursor: pointer; /* Cambia el cursor a una manita */
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+.gallery-img:hover {
+    transform: scale(1.05); /* Crece un poquito al pasar el ratón */
+    filter: brightness(0.8); /* Se oscurece un poco para indicar que es clickeable */
+}
+@media (max-width: 600px) {
+     .collage-container { 
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    } 
+}
+.lightbox {
+    display: none; /* Se mantiene invisible hasta que se usa JS */
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* Fondo negro semitransparente */
+    align-items: center;
+    justify-content: center;
+}
+.lightbox-content {
+    max-width: 90%;
+    max-height: 85vh; /* Evita que la imagen sea más grande que la pantalla */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    animation: zoom 0.3s ease; /* Pequeña animación al abrir */
+}
+@keyframes zoom {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+.close-lightbox {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close-lightbox:hover { color: #aaaaaa; }
+
+#logo-rebotando, #cara-rebotando{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 80px;
+    z-index: 9999;
+    display: block;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+#logo-rebotando img, #cara-rebotando img{
+    width: 100%;
+    height: auto;
+    display: block;
+    pointer-events: none;
+}
+#logo-rebotando:hover, #cara-rebotando:hover{
+    transform: scale(1.1);
+}
