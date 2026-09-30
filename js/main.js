@@ -158,4 +158,22 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'ArrowRight') navegarGaleria(1);
         }
     });
+
+    const relojElemento = document.getElementById('reloj-vivo');
+    if (relojElemento) {
+        const actualizarReloj = () => {
+            const ahora = new Date();
+            // Formato de 24 horas (HH:MM:SS)
+            const horaFormateada = ahora.toLocaleTimeString('es-MX', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            relojElemento.textContent = horaFormateada;
+        };
+        
+        actualizarReloj(); // Llama la función inmediatamente para no mostrar vacío
+        setInterval(actualizarReloj, 1000); // Actualiza cada 1000 milisegundos (1 segundo)
+    }
 });

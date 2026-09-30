@@ -85,21 +85,35 @@ body {
     background-image: radial-gradient(rgba(0,0,0,0.15) 1px, transparent 1px);
 }
 
-.marquee-container {
-    position: fixed; bottom: 0; left: 0; width: 100%;
+/* --- BARRA INFERIOR FIJA (Nombre y Reloj) --- */
+.footer-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     background-color: var(--color-fondo);
-    padding: 8px 0; overflow: hidden; white-space: nowrap;
-    z-index: 10; border-top: 2px solid var(--color-texto);
+    color: var(--color-texto);
+    padding: 10px 25px; /* Espaciado interno */
+    display: flex;
+    justify-content: space-between; /* Empuja un elemento a cada lado */
+    align-items: center;
+    z-index: 10;
+    border-top: 1px dashed #444; /* Línea punteada sutil, o cámbiala por solid #fff */
 }
 
-.marquee-text {
-    display: inline-block; font-size: 1.1rem;
-    animation: scroll-left 15s linear infinite;
+.footer-text {
+    font-size: 0.85rem;
+    letter-spacing: 1px;
 }
 
-@keyframes scroll-left { 
-    from { transform: translateX(100%); } 
-    to { transform: translateX(-100%); } 
+.footer-clock {
+    font-size: 0.85rem;
+    color: var(--color-texto-secundario);
+    font-variant-numeric: tabular-nums; /* Evita que el texto brinque cuando cambian los segundos */
+}
+
+@media (max-width: 600px) {
+    .footer-bar { padding: 10px 15px; }
 }
 
 /* FEED BLOQUES (index.html) */
