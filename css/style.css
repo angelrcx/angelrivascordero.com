@@ -1,223 +1,203 @@
-@font-face {
-    font-family: 'Rascal';
-    src: url('../fonts/RASCAL__.TTF') format('truetype');
+/* =========================================
+   1. VARIABLES GLOBALES
+   ========================================= */
+:root {
+    --color-fondo: #000000;
+    --color-texto: #ffffff;
+    --color-texto-secundario: #dddddd;
+    --fuente-terminal: 'Courier New', Courier, monospace;
+    
+    --margen-superior: 180px; 
+    --margen-superior-movil: 150px;
+    
+    --ancho-feed: 680px;
+    --ancho-escrito: 640px;
 }
-*{
+
+/* =========================================
+   2. RESET Y TIPOGRAFÍA BASE
+   ========================================= */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: var(--fuente-terminal) !important;
 }
 
-body,html{
-    height: 100%;
-    font-family: 'Courier New','Courier New', Courier, monospace;
+body {
+    min-height: 100vh;
     overflow-x: hidden;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
 }
 
-.video-wrapper{
+/* =========================================
+   3. ENCABEZADO Y LOGO (Global)
+   ========================================= */
+.encabezado-logo {
     position: fixed;
-    top:0;
-    left:0;
+    top: 0; left: 0; z-index: 220; /* Alto para estar sobre todas las páginas */
     width: 100%;
-    height: 100%;
-    z-index: -1;
-    background-color: #000;
+    display: flex; justify-content: center; align-items: center;
+    padding: 12px 0;
+    pointer-events: none;
 }
 
-.video-bg{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.logo-contenedor {
+    position: relative; display: inline-block; pointer-events: auto;
+}
+
+.logo-gif {
+    max-width: 140px; height: auto; display: block;
+    transition: transform 0.2s ease-in-out;
+}
+
+.logo-contenedor:hover .logo-gif { transform: scale(1.05); }
+
+.hitbox-ovalado {
+    position: absolute; z-index: 10;
+    border-radius: 50%;
+    top: 20%; left: 5%; width: 90%; height: 60%;
+}
+
+.contenedor-maestro {
+    position: relative;
+    z-index: 1;
+    width: 90%;
+    margin: var(--margen-superior) auto 120px auto;
+}
+
+/* =========================================
+   4. INDEX: FONDO DE VIDEO Y MARQUESINA
+   ========================================= */
+.video-wrapper {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 0; background-color: var(--color-fondo); pointer-events: none;
+}
+
+.video-bg {
+    width: 100%; height: 100%; object-fit: cover;
     filter: brightness(0.6) contrast(1.2) saturate(1.4);
 }
 
-.overlay{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image:radial-gradient(rgba(0,0,0,0.1) 1px, transparent 1px);
+.overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-image: radial-gradient(rgba(0,0,0,0.15) 1px, transparent 1px);
 }
 
-.content{
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    color: white;
-    text-align: center;
-    padding: 20px;
+.marquee-container {
+    position: fixed; bottom: 0; left: 0; width: 100%;
+    background-color: var(--color-fondo);
+    padding: 8px 0; overflow: hidden; white-space: nowrap;
+    z-index: 10; border-top: 2px solid var(--color-texto);
 }
-h1{
-    font-size: 4rem;
-    letter-spacing: 5px;
-    margin-bottom: 10px;
-    text-shadow: 3px 3px 0px #ff00ff;
-}
-.marquee-container{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #000;
-    color: #ffff00;
-    padding: 10px 0;
-    overflow: hidden;
-    white-space: nowrap;
-    z-index: 10;
-    border-top: 2px solid #ffff00;
-}
-.marquee-text{
-    display: inline-block;
-    font-family: 'Rascal',sans-serif;
-    font-size: 1.5rem;
+
+.marquee-text {
+    display: inline-block; font-size: 1.1rem;
     animation: scroll-left 15s linear infinite;
 }
-@keyframes scroll-left{
-    from{ transform: translateX(100%);}
-    to{ transform: translateX(-100%);}
+
+@keyframes scroll-left { 
+    from { transform: translateX(100%); } 
+    to { transform: translateX(-100%); } 
 }
-.centered-image-link{
-    display: inline-block;
-    width: fit-content;
-    max-width: 70%;
-    line-height: 0;
+
+/* FEED BLOQUES (index.html) */
+.feed-bloques { 
+    max-width: var(--ancho-feed); display: grid; grid-template-columns: repeat(2, 1fr); gap: 45px 35px; align-items: start; 
 }
-.centered-image{
-    max-width: 100%;
-    max-height: 50vh;
-    height: auto;
-    width: auto;
-    border: none;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    transition: transform 0.2s ease;
-    opacity: 0.5;
+.bloque { display: block; width: 100%; cursor: pointer; transition: transform 0.25s ease; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6); line-height: 0;}
+.bloque img, .bloque video { width: 100%; height: auto; display: block; }
+.bloque:nth-child(even) { margin-top: 85px; }
+.bloque:hover { transform: scale(1.03); }
+
+/* =========================================
+   5. ESCRITOS (primero.html)
+   ========================================= */
+.contenedor-escrito { max-width: var(--ancho-escrito); padding: 25px; border: 1px dashed #444; background: var(--color-fondo); }
+.nav-retro { margin-bottom: 25px; padding-bottom: 10px; border-bottom: 1px dotted #555; }
+.nav-retro a { color: var(--color-texto); text-decoration: none; font-size: 0.9rem; }
+.nav-retro a:hover { background-color: var(--color-texto); color: var(--color-fondo); }
+.escrito-titulo { font-size: 1.6rem; margin-bottom: 5px; }
+.escrito-fecha { font-size: 0.8rem; color: #888; margin-bottom: 25px; display: block; }
+.escrito-img { width: 100%; height: auto; margin: 20px 0; border: 1px solid #333; }
+.escrito-enlace { color: var(--color-texto); text-decoration: underline; display: block; margin-bottom: 20px; word-wrap: break-word;}
+.texto-terminal { white-space: pre-wrap; text-align: justify; font-size: 0.95rem; color: var(--color-texto-secundario); line-height: 1.7; }
+
+/* =========================================
+   6. GALERÍA FOTOS (Suelo Estilo ZINE)
+   ========================================= */
+.scatter-floor {
+    position: fixed;
+    inset: 0;
+    z-index: 120; /* Por debajo del logo (220) */
+    background-color: #000000;
+    background-size: 52px 52px;
+    display: flex;
+    flex-direction: column;
+    user-select: none; /* Evita que el texto fantasma se seleccione al arrastrar */
 }
-.centered-image-link:hover .centered-image{
-    transform: scale(1.05);
-}
-.encabezado-logo{
-    position: absolute;
-    top: 0;
-    z-index: 20;
-    display:flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    width: 100%;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    background-color: transparent;
-}
-.logo-contenedor{
+
+.floor-canvas {
     position: relative;
-    display: inline-block;
-}
-.logo-gif{
-    max-width: 150px;
-    height: auto;
-    display: block;
-    transition: transform 0.2s ease-in-out;
-}
-.logo-contenedor:hover .logo-gif{
-    transform:scale(1.05);
-}
-.hitbox-ovalado{
-    position: absolute;
-    z-index: 10;
-    border-radius: 50%;
-    top: 25%;
-    left: 5%;
-    width: 90%;
-    height: 50%;
+    flex: 1;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
 }
 
-.introduccion {
-    max-width: 800px;
-    margin: 130px auto 60px auto;
-    text-align: center;
-    line-height: 1.6;
+.scattered-photo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: clamp(145px, 18vw, 240px);
+    max-width: 240px;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    box-shadow: 0 16px 42px rgba(0, 0, 0, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: #0a0a0a;
+    transition: box-shadow 0.2s ease;
 }
-.collage-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
-    max-width: 1200px;
-    margin: 0 auto; /* Centra el collage en la pantalla */
-    padding: 20px;
+
+.scattered-photo:active {
+    cursor: grabbing;
+    box-shadow: 0 26px 65px rgba(0, 0, 0, 0.96);
 }
-.gallery-img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 4px; /* Un ligero borde redondeado, opcional */
-    cursor: pointer; /* Cambia el cursor a una manita */
-    transition: transform 0.3s ease, filter 0.3s ease;
+
+.scattered-photo img {
+    display: block; width: 100%; height: auto; max-height: 300px;
+    object-fit: contain; pointer-events: none; -webkit-user-drag: none;
 }
-.gallery-img:hover {
-    transform: scale(1.05); /* Crece un poquito al pasar el ratón */
-    filter: brightness(0.8); /* Se oscurece un poco para indicar que es clickeable */
-}
-@media (max-width: 600px) {
-     .collage-container { 
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    } 
-}
+
+/* =========================================
+   7. LIGHTBOX (Modal para todas las páginas)
+   ========================================= */
 .lightbox {
-    display: none; /* Se mantiene invisible hasta que se usa JS */
-    position: fixed;
-    z-index: 999;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9); /* Fondo negro semitransparente */
-    align-items: center;
-    justify-content: center;
+    display: none; position: fixed; z-index: 9999;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.94);
+    align-items: center; justify-content: center; padding: 20px;
 }
-.lightbox-content {
-    max-width: 90%;
-    max-height: 85vh; /* Evita que la imagen sea más grande que la pantalla */
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-    animation: zoom 0.3s ease; /* Pequeña animación al abrir */
-}
-@keyframes zoom {
-    from { transform: scale(0.9); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-.close-lightbox {
-    position: absolute;
-    top: 20px;
-    right: 40px;
-    color: white;
-    font-size: 50px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
+.modal-caja { max-width: 900px; width: 100%; display: flex; flex-direction: column; align-items: center; animation: zoom 0.25s ease; }
+#modal-media-contenedor img, #modal-media-contenedor video { max-width: 100%; max-height: 75vh; border: 1px solid #222; }
+.close-lightbox { position: fixed; top: 20px; right: 35px; font-size: 45px; font-weight: bold; cursor: pointer; z-index: 10000; color: #fff;}
+.nav-lightbox { position: fixed; top: 50%; transform: translateY(-50%); color: var(--color-texto); font-size: 3rem; cursor: pointer; z-index: 10000; padding: 20px; display: none; font-weight: bold;}
+.nav-prev { left: 10px; }
+.nav-next { right: 10px; }
+@keyframes zoom { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-.close-lightbox:hover { color: #aaaaaa; }
-
-#logo-rebotando, #cara-rebotando{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 80px;
-    z-index: 9999;
-    display: block;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-#logo-rebotando img, #cara-rebotando img{
-    width: 100%;
-    height: auto;
-    display: block;
-    pointer-events: none;
-}
-#logo-rebotando:hover, #cara-rebotando:hover{
-    transform: scale(1.1);
+/* =========================================
+   8. AJUSTES MÓVILES
+   ========================================= */
+@media (max-width: 680px) {
+    .contenedor-maestro { width: 95%; margin-top: var(--margen-superior-movil); }
+    .feed-bloques { gap: 25px 18px; }
+    .bloque:nth-child(even) { margin-top: 55px; }
+    .scatter-floor { background-size: 36px 36px; }
+    .scattered-photo { width: 38vw; max-width: 165px; }
+    .scattered-photo img { max-height: 210px; }
+    .nav-lightbox { font-size: 2rem; padding: 10px; }
 }

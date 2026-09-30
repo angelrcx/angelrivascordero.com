@@ -1,64 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content ="width=device-width, initial-scale=1.0">
-        <title>Fotos</title>
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="icon" type="image/jpg" href="images/logo.jpg">
-    </head>
-    <body>
-        <header class="encabezado-logo">
-            <a href="index.html">
-                <img src="images/logo.gif" alt="logo" class="logo-gif">
-            </a>
-        </header>
-        <section class="introduccion">
-        </section>
-        <section class="collage-container">
-            <img src="images/foto1.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto37.webp" alt="?" class="gallery-img" loading="lazy">
-            
-            <img src="images/foto36.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto33.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto32.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto2.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto3.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto4.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto5.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto6.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto7.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto8.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto9.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto10.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto11.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto12.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto13.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto14.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto15.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto16.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto17.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto18.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto19.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto20.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto21.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto22.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto23.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto24.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto25.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto26.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto27.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto28.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto29.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto30.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto31.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto34.webp" alt="?" class="gallery-img" loading="lazy">
-            <img src="images/foto35.webp" alt="?" class="gallery-img" loading="lazy">
-        </section>
-        <div id="lightbox" class="lightbox">
-            <span class="close-lightbox">&times;</span>
-            <img id="lightbox-img" class="lightbox-content">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotos | Angel Rivas Cordero</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="encabezado-logo">
+        <div class="logo-contenedor">
+            <img src="images/logo.gif" alt="logo" class="logo-gif">
+            <a href="index.html" class="hitbox-ovalado" aria-label="Inicio"></a>
         </div>
-        <script src="js/galeria.js"></script>
-    </body>
+    </header>
+
+    <!-- El suelo de cuadrícula interactivo -->
+    <main id="galeria-dinamica" class="scatter-floor">
+        <div id="floor-canvas" class="floor-canvas"></div>
+    </main>
+
+    <!-- Modal para ver en grande -->
+    <div id="modal-universal" class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <span class="nav-lightbox nav-prev">&lt;</span>
+        <span class="nav-lightbox nav-next">&gt;</span>
+        
+        <div class="modal-caja">
+            <div id="modal-media-contenedor"></div>
+        </div>
+    </div>
+    
+    <script src="js/main.js"></script>
+</body>
 </html>

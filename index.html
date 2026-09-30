@@ -3,41 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portafolio personal de Angel Rivas Cordero">
-    <meta name="author" content="Angel Rivas Cordero">
     <title>Angel Rivas Cordero</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/jpg" href="images/logo.jpg">
 </head>
 <body>
-    <a href="https://www.youtube.com/watch?v=Q9KhlSQF09U" target="_blank" id="logo-rebotando">
-        <img src="images/guitarra.gif" alt="yt">
-    </a>
-    <a href="cuarto.html" id="cara-rebotando">
-        <img src="images/cara.gif" alt="cara">
-    </a>
     <header class="encabezado-logo">
-            <div class="logo-contenedor">
-                <img src="images/logo.gif" alt="logo" class="logo-gif">
-                <a href="index.html" class="hitbox-ovalado"></a>
-            </div>
-        </header>
+        <div class="logo-contenedor">
+            <img src="images/logo.gif" alt="logo" class="logo-gif">
+            <a href="index.html" class="hitbox-ovalado" aria-label="Inicio"></a>
+        </div>
+    </header>
+
     <div class="video-wrapper">
         <video class="video-bg" autoplay muted loop playsinline>
-    <source src="video/fondo2.mp4" type="video/mp4">
-</video>
+            <source src="video/fondo2.mp4" type="video/mp4">
+        </video>
         <div class="overlay"></div>
     </div>
-    <main class="content">
-        <a href="fotos.html" target="_blank" class="centered-image-link">
-            <img src="images/aquel.jpeg" alt="Angel" class="centered-image">
+
+    <!-- Usamos contenedor-maestro junto con feed-bloques -->
+    <main class="contenedor-maestro feed-bloques">
+        <a href="escritos/primero.html" class="bloque"><img src="images/escrito1.webp" alt="Galería"></a>
+         <a href="https://www.youtube.com/watch?v=2p2DdY11mLk" target="_blank" class="bloque">
+            <img src="images/mixtape1.webp" alt="Video YouTube">
         </a>
+        <a href="https://etcetera.page/" class="bloque"><img src="images/logo_etc.webp" alt="Galería"></a>
+        <a href="fotos.html" class="bloque"><img src="images/aquel.jpeg" alt="Galería"></a>
+        <div class="bloque js-abrir-modal" data-tipo="video" data-src="video/fondo2.mp4">
+            <video src="video/fondo2.mp4" autoplay muted loop playsinline></video>
+        </div>
     </main>
-    <div class="marquee-container">
-        <div class="marquee-text">
-            Angel rivascordero Aquel &nbsp;&nbsp;&nbsp; Angel rivascordero Aquel &nbsp;&nbsp;&nbsp; Angel rivascordero Aquel
+
+    <div id="modal-universal" class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <div class="modal-caja">
+            <div id="modal-media-contenedor"></div>
+            <p id="modal-descripcion" class="modal-desc"></p>
         </div>
     </div>
-    <script src="js/bounce.js"></script>
+
+    <div class="marquee-container">
+        <div class="marquee-text">
+            angel rivascordero aquel &nbsp;&nbsp;&nbsp; angel rivascordero aquel
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
 </body>
 </html>
