@@ -2,15 +2,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- VARIABLES GLOBALES DEL MODAL ---
     const modal = document.getElementById('modal-universal');
     const contenedorMedia = document.getElementById('modal-media-contenedor');
+    const textoDesc = document.getElementById('modal-descripcion'); // Se asegura de leer la etiqueta p
     const flechasNav = document.querySelectorAll('.nav-lightbox');
     
     let fotosArray = []; 
     let indiceActual = -1;
 
     // --- FUNCIONES DEL MODAL (LIGHTBOX) ---
-    const abrirModal = (src) => {
-        contenedorMedia.innerHTML = `<img src="${src}" alt="Media expandida">`;
-        flechasNav.forEach(btn => btn.style.display = 'block');
+    const abrirModal = (tipo, src, descripcion, esGaleria = false) => {
+        contenedorMedia.innerHTML = ''; 
+        
+        if (tipo === 'video') {
+            contenedorMedia.innerHTML = `<video src="${src}" controls autoplay playsinline></video>`;
+        } else {
+            contenedorMedia.innerHTML = `<img src="${src}" alt="Media expandida">`;
+        }
+
+        if (textoDesc) {
+            textoDesc.style.display = descripcion ? 'block' : 'none';
+            textoDesc.textContent = descripcion || '';
+        }
+        
+        flechasNav.forEach(btn => btn.style.display = esGaleria ? 'block' : 'none');
         modal.style.display = 'flex';
     };
 
@@ -28,14 +41,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (indiceActual >= fotosArray.length) indiceActual = 0;
         if (indiceActual < 0) indiceActual = fotosArray.length - 1;
         
-        abrirModal(`images/galeria/${fotosArray[indiceActual]}`);
+        // En la galería siempre son imágenes sin texto
+        abrirModal('imagen', `images/galeria/${fotosArray[indiceActual]}`, '', true);
     };
 
     // --- LÓGICA DE ZINE: SUELO INTERACTIVO Y ARRASTRE ---
     const floorCanvas = document.getElementById('floor-canvas');
     let floorTopZ = 20;
 
-    // Función matemática para esparcir las fotos en círculo (adaptado de zine.js)
     function scatterPositions(count) {
         const isMobile = window.innerWidth <= 680;
         const spreadX = isMobile ? window.innerWidth * 0.26 : Math.min(window.innerWidth * 0.32, 390);
@@ -54,11 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (floorCanvas) {
-        // Carga dinámica del JSON generado por Python
         fetch('lista-fotos.json')
             .then(respuesta => respuesta.json())
             .then(fotos => {
-                // Desordenamos la lista inicialmente
                 fotosArray = fotos.sort(() => Math.random() - 0.5);
                 floorTopZ = 20 + fotosArray.length;
                 
@@ -73,24 +84,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     let posY = layout[idx].y;
                     const rot = layout[idx].rot;
 
-                    // Posicionamiento inicial en el centro con dispersión
                     card.style.transform = `translate(calc(-50% + ${posX}px), calc(-50% + ${posY}px)) rotate(${rot}deg)`;
 
                     const img = document.createElement('img');
                     img.src = `images/galeria/${fotoNombre}`;
-                    img.draggable = false; // Evita el arrastre nativo del navegador
+                    img.draggable = false; 
 
                     card.appendChild(img);
                     floorCanvas.appendChild(card);
 
-                    // --- EVENTOS DE ARRASTRE (POINTER EVENTS) ---
                     let draggingPhoto = false;
                     let sx = 0, sy = 0, dist = 0;
 
                     card.addEventListener('pointerdown', e => {
                         draggingPhoto = true;
                         dist = 0;
-                        floorTopZ++; // Trae la foto al frente
+                        floorTopZ++; 
                         card.style.zIndex = floorTopZ;
                         sx = e.clientX - posX;
                         sy = e.clientY - posY;
@@ -112,10 +121,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         draggingPhoto = false;
                         card.releasePointerCapture(e.pointerId);
 
-                        // Si la distancia de arrastre fue mínima (< 6px), se considera un clic
                         if (dist < 6) {
                             indiceActual = idx;
-                            abrirModal(`images/galeria/${fotosArray[indiceActual]}`);
+                            abrirModal('imagen', `images/galeria/${fotosArray[indiceActual]}`, '', true);
                         }
                     });
                 });
@@ -128,9 +136,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Clic en bloque del index.html
         const bloque = e.target.closest('.js-abrir-modal');
         if (bloque) {
-            contenedorMedia.innerHTML = `<video src="${bloque.dataset.src}" controls autoplay playsinline></video>`;
-            flechasNav.forEach(btn => btn.style.display = 'none');
-            modal.style.display = 'flex';
+            // Esto leerá automáticamente el data-tipo, data-src y data-desc de tu HTML
+            abrirModal(bloque.dataset.tipo || 'imagen', bloque.dataset.src, bloque.dataset.desc, false);
             return;
         }
 
